@@ -25,32 +25,21 @@ const createPlane = () => {
     const bladeHeight = 100;
     const bladeDepth = 18;
 
-    const redMaterial = new THREE.MeshStandardMaterial({
+    const redMaterial = new THREE.MeshPhongMaterial({
         color: Colors.red,
-        metalness: 0.5,
-        roughness: 0.5,
         flatShading: true,
     })
-    const whiteMaterial = new THREE.MeshStandardMaterial({
+    const whiteMaterial = new THREE.MeshPhongMaterial({
         color: Colors.white,
-        metalness: 0.5,
-        roughness: 0.5,
         flatShading: true,
     })
-    const brownMaterial = new THREE.MeshStandardMaterial({
+    const brownMaterial = new THREE.MeshPhongMaterial({
         color: Colors.brown,
-        metalness: 0.5,
-        roughness: 0.5,
         flatShading: true,
     })
 
     const coreGeometry = new THREE.BoxGeometry(coreWidth, coreDepth, coreDepth);
     const coreGeometryAttributesPosition = coreGeometry.attributes.position;
-    const testIndex = 12;
-    // console.log(coreGeometryAttributesPosition);
-    // console.log(coreGeometryAttributesPosition.getX(testIndex));
-    // console.log(coreGeometryAttributesPosition.getY(testIndex));
-    // console.log(coreGeometryAttributesPosition.getZ(testIndex));
 
     [4, 8, 21].forEach(index => {
         coreGeometryAttributesPosition.setY(index, coreGeometryAttributesPosition.getY(index)-10);
@@ -147,7 +136,7 @@ const createPlane = () => {
 
     const scale = 0.6;
     planeGroup.scale.set(scale, scale, scale);
-    planeGroup.position.set(-20, 650, 75);
+    planeGroup.position.set(-20, 670, 75);
 
     return {
         planeGroup,

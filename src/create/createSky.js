@@ -11,10 +11,8 @@ const createCloud = (rotation) => {
         const cloudSize = Math.random()*60;
         const cloudMesh = new THREE.Mesh(
             new THREE.BoxGeometry(cloudSize, cloudSize, cloudSize),
-            new THREE.MeshStandardMaterial({
+            new THREE.MeshPhongMaterial({
                 color: 'white',
-                metalness: 0,
-                roughness: 1,
             })
         )
         cloudMesh.position.set(index*40, cloudHeight, cloudDepth);

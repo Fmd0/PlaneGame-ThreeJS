@@ -1,15 +1,15 @@
 import * as THREE from 'three'
 import {OrbitControls} from "three/addons";
 import createSky from "./create/createSky";
-import createSea from "./create/createSea";
-import {Colors} from "./utils/constants";
+import createLand from "./create/createLand";
 import createPlane from "./create/createPlane";
-import {createTree} from "./create/createForest";
-import {createFlower} from "./create/createFlowers";
+import createLight from "./create/createLight";
+import createForest from "./create/createForest";
+import createFlowers from "./create/createFlowers";
 
 
 
-const scene = new THREE.Scene();
+export const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -17,53 +17,30 @@ window.document.body.appendChild(renderer.domElement);
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0xf7d9aa, 0)
-scene.fog = new THREE.Fog(0xf7d9aa, 400, 950);
+scene.fog = new THREE.Fog(0xf7d9aa, 200, 1000);
 renderer.shadowMap.enabled = true;
 
 
-const createLight = () => {
-    const hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, 1);
-    scene.add(hemisphereLight)
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
-    directionalLight.position.set(400, 800, 800);
-
-    directionalLight.castShadow = true;
-    const length = 1000;
-    directionalLight.shadow.camera.left = -length;
-    directionalLight.shadow.camera.right = length;
-    directionalLight.shadow.camera.top = length;
-    directionalLight.shadow.camera.bottom = -length;
-    directionalLight.shadow.camera.far = 1200;
-    directionalLight.shadow.camera.near = 400;
-
-    directionalLight.shadow.mapSize.width = 1024*4;
-    directionalLight.shadow.mapSize.height = 1024*4;
-
-
-    // const cameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
-    // scene.add(cameraHelper);
-
-    scene.add(directionalLight);
-}
-createLight();
-const cylinderMesh = createSea();
+const {directionalLight, hemisphereLight} = createLight();
+scene.add(directionalLight);
+scene.add(hemisphereLight);
+const cylinderMesh = createLand();
 scene.add(cylinderMesh)
 const skyGroup = createSky();
 scene.add(skyGroup)
-
 const {planeGroup, bladeGroup} = createPlane();
 scene.add(planeGroup)
+const forest = createForest();
+scene.add(forest);
+const flowers = createFlowers();
+scene.add(flowers);
 
-
-const petalMesh = createFlower();
-petalMesh.position.set(0, 700, 0)
-scene.add(petalMesh)
 
 const orbitControls = new OrbitControls(camera, renderer.domElement);
-// orbitControls.enableZoom = false;
-// orbitControls.enablePan = false;
-// orbitControls.enableRotate = false;
+orbitControls.enableZoom = false;
+orbitControls.enablePan = false;
+orbitControls.enableRotate = false;
 orbitControls.enableDamping = true;
 
 // setInterval(() => {
@@ -71,8 +48,8 @@ orbitControls.enableDamping = true;
 //     console.log(orbitControls.target);
 // }, 3000)
 
-camera.position.set(0, 720, 400);
-orbitControls.target.set(0, 710, 300);
+camera.position.set(0, 700, 400);
+orbitControls.target.set(0, 680, 100);
 
 const loop = () => {
     renderer.render(scene, camera);
@@ -80,6 +57,8 @@ const loop = () => {
 
     cylinderMesh.rotation.y -= 0.001;
     skyGroup.rotation.z += 0.001;
+    forest.rotation.z += 0.001;
+    flowers.rotation.z += 0.001;
     bladeGroup.rotation.x += 0.2;
 
     window.requestAnimationFrame(loop);
@@ -95,12 +74,12 @@ const handlePointerMove = (() => {
             isThrottle = false;
         }, 30);
         const heightRatio = (window.innerHeight - event.clientY) / window.innerHeight;
-        let height = (heightRatio-0.52)*window.innerHeight*0.75+650;
-        height = height<640?640:height;
+        let height = (heightRatio-0.52)*window.innerHeight*0.5+670;
+        height = height<670?670:height;
         height = height>850?850:height;
 
         const widthRatio = (event.clientX) / window.innerWidth;
-        let width = (widthRatio-0.487)*window.innerWidth*0.75-20;
+        let width = (widthRatio-0.487)*window.innerWidth*0.5-20;
         width = width<-350?-350:width;
         width = width>350?350:width;
         planeGroup.position.x = width;
@@ -114,9 +93,5 @@ const handleResize = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener('resize', handleResize);
-// window.addEventListener('pointermove', handlePointerMove);
+window.addEventListener('pointermove', handlePointerMove);
 
-export {
-    scene,
-    camera,
-}

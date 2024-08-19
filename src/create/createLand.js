@@ -2,16 +2,11 @@ import * as THREE from "three";
 import {Colors} from "../utils/constants";
 
 
-const createSea = () => {
+const createLand = () => {
     const cylinderMesh = new THREE.Mesh(
         new THREE.CylinderGeometry(600, 600, 800),
-        new THREE.MeshStandardMaterial({
-            color: Colors.blue,
-            metalness: 0,
-            roughness: 1,
-            transparent:true,
-            opacity:.6,
-            flatShading: true,
+        new THREE.MeshPhongMaterial({
+            color: Colors.lightgreen,
         })
     )
     cylinderMesh.rotation.x = -Math.PI / 2;
@@ -19,4 +14,4 @@ const createSea = () => {
     return cylinderMesh;
 }
 
-export default createSea;
+export default createLand;

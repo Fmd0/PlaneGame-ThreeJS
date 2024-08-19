@@ -3,15 +3,11 @@ import {Colors} from "../utils/constants";
 
 const treeLeaveMaterial = new THREE.MeshPhongMaterial({
     color: Colors.green,
-    // metalness: 0,
-    // roughness: 1,
     flatShading: true
 })
 
 const treeTrunkMaterial = new THREE.MeshPhongMaterial({
     color: Colors.brown,
-    // metalness: 0,
-    // roughness: 1,
     flatShading: true
 })
 
@@ -62,6 +58,33 @@ const createTree = () => {
     return treeGroup;
 }
 
-export {
-    createTree,
+const createForest = () => {
+
+    const treeXAmount = 50;
+    const treeYAmount = 5;
+    const dividedAngle = 2*Math.PI / treeXAmount;
+    const forestGroup = new THREE.Group();
+
+
+    for (let i = 0; i < treeXAmount; i++) {
+        for (let j = 0; j < treeYAmount; j++) {
+            const treeMesh = createTree();
+            const randomAngle = dividedAngle*i + Math.random()*dividedAngle;
+            treeMesh.position.set(
+                610*Math.sin(randomAngle),
+                610*Math.cos(randomAngle),
+                (Math.random()-0.5)*550
+            )
+            treeMesh.rotation.z = -randomAngle;
+            const randomScale = Math.random()*0.5+0.5;
+            treeMesh.scale.set(randomScale, randomScale, randomScale);
+            treeMesh.position.x -= Math.sin(randomAngle)*(1-randomScale)*15;
+            treeMesh.position.y -= Math.cos(randomAngle)*(1-randomScale)*15;
+
+            forestGroup.add(treeMesh);
+        }
+    }
+    return forestGroup;
 }
+
+export default createForest;

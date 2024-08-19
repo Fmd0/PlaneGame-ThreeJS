@@ -1,10 +1,8 @@
 import * as THREE from "three";
-import {scene} from "../3D";
 
 
 const createLight = () => {
     const hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, 1);
-    scene.add(hemisphereLight)
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
     directionalLight.position.set(400, 800, 800);
@@ -20,12 +18,10 @@ const createLight = () => {
 
     directionalLight.shadow.mapSize.width = 1024*4;
     directionalLight.shadow.mapSize.height = 1024*4;
-
-
-    // const cameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
-    // scene.add(cameraHelper);
-
-    scene.add(directionalLight);
+    return {
+        hemisphereLight,
+        directionalLight,
+    }
 }
 
 export default createLight;
