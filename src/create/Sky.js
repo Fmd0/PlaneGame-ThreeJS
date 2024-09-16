@@ -28,8 +28,8 @@ const createCloud = (rotation) => {
 }
 
 
-const createSky = () => {
-    const skyGroup = new THREE.Group();
+function Sky() {
+    this.mesh = new THREE.Group();
     const rotationArray = [];
 
     let randomRotation = 0;
@@ -39,10 +39,8 @@ const createSky = () => {
     }
 
     rotationArray.forEach(rotation => {
-        skyGroup.add(createCloud(rotation))
+        this.mesh.add(createCloud(rotation))
     })
-
-    return skyGroup;
 }
 
-export default createSky;
+export default Sky;

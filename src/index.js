@@ -1,11 +1,10 @@
 import * as THREE from 'three'
 import {OrbitControls} from "three/addons";
-import createSky from "./create/createSky";
-import createLand from "./create/createLand";
-import createPlane from "./create/createPlane";
-import createLight from "./create/createLight";
-import createForest from "./create/createForest";
+import Light from "./create/Light";
+import Forest from "./create/Forest";
 import createFlowers from "./create/createFlowers";
+import Land from "./create/Land";
+import Sky from "./create/Sky";
 
 
 
@@ -16,23 +15,22 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 window.document.body.appendChild(renderer.domElement);
 
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setClearColor(0xf7d9aa, 0)
-scene.fog = new THREE.Fog(0xf7d9aa, 200, 1000);
+renderer.setClearColor(0xc0c0c0, 1)
+// scene.fog = new THREE.Fog(0xf7d9aa, 200, 1000);
+scene.fog = new THREE.Fog(0xc0c0c0, 200, 1000);
 renderer.shadowMap.enabled = true;
 
 
 
-const {directionalLight, hemisphereLight} = createLight();
-scene.add(directionalLight);
-scene.add(hemisphereLight);
-const cylinderMesh = createLand();
-scene.add(cylinderMesh)
-const skyGroup = createSky();
-scene.add(skyGroup)
-const {planeGroup, bladeGroup} = createPlane();
-scene.add(planeGroup)
-const forest = createForest();
-scene.add(forest);
+const light = new Light();
+scene.add(light.directionalLight);
+scene.add(light.hemisphereLight);
+const land = new Land();
+scene.add(land.mesh)
+const sky = new Sky();
+scene.add(sky.mesh)
+const forest = new Forest();
+scene.add(forest.mesh);
 const flowers = createFlowers();
 scene.add(flowers);
 
@@ -48,18 +46,18 @@ orbitControls.enableDamping = true;
 //     console.log(orbitControls.target);
 // }, 3000)
 
-camera.position.set(0, 700, 400);
-orbitControls.target.set(0, 680, 100);
+camera.position.set(0, 770, 400);
+orbitControls.target.set(0, 750, 0);
 
 const loop = () => {
     renderer.render(scene, camera);
     orbitControls.update();
 
-    cylinderMesh.rotation.y -= 0.001;
-    skyGroup.rotation.z += 0.001;
-    forest.rotation.z += 0.001;
+    land.mesh.rotation.y -= 0.001;
+    sky.mesh.rotation.z += 0.001;
+    forest.mesh.rotation.z += 0.001;
     flowers.rotation.z += 0.001;
-    bladeGroup.rotation.x += 0.2;
+    // bladeGroup.rotation.x += 0.2;
 
     window.requestAnimationFrame(loop);
 }
@@ -82,8 +80,8 @@ const handlePointerMove = (() => {
         let width = (widthRatio-0.487)*window.innerWidth*0.5-20;
         width = width<-350?-350:width;
         width = width>350?350:width;
-        planeGroup.position.x = width;
-        planeGroup.position.y = height;
+        // planeGroup.position.x = width;
+        // planeGroup.position.y = height;
     }
 })();
 
@@ -93,5 +91,5 @@ const handleResize = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener('resize', handleResize);
-window.addEventListener('pointermove', handlePointerMove);
+// window.addEventListener('pointermove', handlePointerMove);
 

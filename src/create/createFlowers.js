@@ -126,12 +126,12 @@ const createFlowers = () => {
             flowerMesh.position.set(
                 620*Math.sin(randomAngle),
                 620*Math.cos(randomAngle),
-                (Math.random()-0.5)*500
+                (Math.random()-0.6)*500
             )
             const randomScale = Math.random()*0.2+0.2;
             flowerMesh.scale.set(randomScale, randomScale, randomScale);
-            flowerMesh.position.x -= Math.sin(randomAngle)*(1-randomScale)*20;
-            flowerMesh.position.y -= Math.cos(randomAngle)*(1-randomScale)*20;
+            flowerMesh.position.x -= Math.sin(randomAngle)*(1-randomScale)*20*1.2;
+            flowerMesh.position.y -= Math.cos(randomAngle)*(1-randomScale)*20*1.2;
 
             flowerMesh.rotation.z = -randomAngle;
             flowerGroup.add(flowerMesh);

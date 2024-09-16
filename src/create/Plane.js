@@ -2,7 +2,7 @@ import * as THREE from "three";
 import {Colors} from "../utils/constants";
 
 
-const createPlane = () => {
+const Plane = () => {
     const planeGroup = new THREE.Group();
 
     const coreWidth = 60;
@@ -136,7 +136,7 @@ const createPlane = () => {
 
     const scale = 0.6;
     planeGroup.scale.set(scale, scale, scale);
-    planeGroup.position.set(-20, 670, 75);
+    planeGroup.position.set(-20, 670, 0);
 
     return {
         planeGroup,
@@ -144,4 +144,4 @@ const createPlane = () => {
     }
 }
 
-export default createPlane;
+export default Plane;

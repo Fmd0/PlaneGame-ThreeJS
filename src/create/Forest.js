@@ -58,12 +58,12 @@ const createTree = () => {
     return treeGroup;
 }
 
-const createForest = () => {
+function Forest() {
 
     const treeXAmount = 50;
-    const treeYAmount = 5;
+    const treeYAmount = 7;
     const dividedAngle = 2*Math.PI / treeXAmount;
-    const forestGroup = new THREE.Group();
+    this.mesh = new THREE.Group();
 
 
     for (let i = 0; i < treeXAmount; i++) {
@@ -73,7 +73,7 @@ const createForest = () => {
             treeMesh.position.set(
                 610*Math.sin(randomAngle),
                 610*Math.cos(randomAngle),
-                (Math.random()-0.5)*550
+                (Math.random()-0.6)*600,
             )
             treeMesh.rotation.z = -randomAngle;
             const randomScale = Math.random()*0.5+0.5;
@@ -81,10 +81,9 @@ const createForest = () => {
             treeMesh.position.x -= Math.sin(randomAngle)*(1-randomScale)*15;
             treeMesh.position.y -= Math.cos(randomAngle)*(1-randomScale)*15;
 
-            forestGroup.add(treeMesh);
+            this.mesh.add(treeMesh);
         }
     }
-    return forestGroup;
 }
 
-export default createForest;
+export default Forest;
