@@ -9,7 +9,6 @@ const Colors = {
     green:0x458248,
     yellow:0xedeb27,
     lightgreen:0x629265,
-
 };
 
 // var Colors = {

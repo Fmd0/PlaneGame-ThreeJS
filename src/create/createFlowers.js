@@ -111,12 +111,12 @@ const createFlower = () => {
     return flowerGroup;
 }
 
-const createFlowers = () => {
+function Flowers() {
 
     const flowerXAmount = 50;
     const flowerYAmount = 4;
     const dividedAngle = 2*Math.PI / flowerXAmount;
-    const flowerGroup = new THREE.Group();
+    this.mesh = new THREE.Group();
 
 
     for (let i = 0; i < flowerXAmount; i++) {
@@ -134,10 +134,9 @@ const createFlowers = () => {
             flowerMesh.position.y -= Math.cos(randomAngle)*(1-randomScale)*20*1.2;
 
             flowerMesh.rotation.z = -randomAngle;
-            flowerGroup.add(flowerMesh);
+            this.mesh.add(flowerMesh);
         }
     }
-    return flowerGroup;
 }
 
-export default createFlowers;
+export default Flowers;

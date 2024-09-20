@@ -2,9 +2,9 @@ import * as THREE from 'three'
 import {OrbitControls} from "three/addons";
 import Light from "./create/Light";
 import Forest from "./create/Forest";
-import createFlowers from "./create/createFlowers";
 import Land from "./create/Land";
 import Sky from "./create/Sky";
+import Flowers from "./create/createFlowers";
 
 
 
@@ -31,8 +31,8 @@ const sky = new Sky();
 scene.add(sky.mesh)
 const forest = new Forest();
 scene.add(forest.mesh);
-const flowers = createFlowers();
-scene.add(flowers);
+const flowers = new Flowers();
+scene.add(flowers.mesh);
 
 
 const orbitControls = new OrbitControls(camera, renderer.domElement);
@@ -56,7 +56,7 @@ const loop = () => {
     land.mesh.rotation.y -= 0.001;
     sky.mesh.rotation.z += 0.001;
     forest.mesh.rotation.z += 0.001;
-    flowers.rotation.z += 0.001;
+    flowers.mesh.rotation.z += 0.001;
     // bladeGroup.rotation.x += 0.2;
 
     window.requestAnimationFrame(loop);
